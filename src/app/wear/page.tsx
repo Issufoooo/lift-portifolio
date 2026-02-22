@@ -12,7 +12,7 @@ import {
 } from "framer-motion";
 import { EASE_SOFT } from "@/lib/motion";
 
-export const useIsomorphicLayoutEffect =
+const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 type UseMediaQueryOptions = {
