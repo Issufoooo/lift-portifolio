@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode (Tailwind v4) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------- Theme tokens ---------- */
+:root {
+  --background: #eef0f3;
+  --background-rgb: 238, 240, 243;   /* used for gradient vignettes */
+  --foreground: #0b0b0b;
+  --black: #060606;
+  --white: #ffffff;
+  --muted: rgba(0, 0, 0, 0.08);
+  --muted-2: rgba(0, 0, 0, 0.12);
+  --glow: rgba(0, 0, 0, 0.18);
+  --accent: #1a1a1a;
+}
+
+html.dark {
+  --background: #0f1115;
+  --background-rgb: 15, 17, 21;      /* used for gradient vignettes */
+  --foreground: #f2f2f2;
+  --muted: rgba(255, 255, 255, 0.10);
+  --muted-2: rgba(255, 255, 255, 0.16);
+  --glow: rgba(255, 255, 255, 0.18);
+  --accent: #e8e8e8;
+}
+
+/* Tailwind theme binding */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ---------- Global base ---------- */
+html {
+  scroll-behavior: smooth;
+  text-rendering: geometricPrecision;
+  min-height: 100%;
+  /* Light: platinum paper */
+  background:
+    radial-gradient(1200px 760px at 50% -260px, #ffffff 0%, #f7f8fa 34%, #eef0f3 72%, #e6e9ef 100%),
+    radial-gradient(980px 560px at 10% 20%, rgba(0, 0, 0, 0.065) 0%, transparent 58%),
+    radial-gradient(980px 560px at 90% 28%, rgba(0, 0, 0, 0.055) 0%, transparent 58%),
+    linear-gradient(180deg, #f8f9fb 0%, #eef0f3 58%, #e6e9ef 100%);
+  background-attachment: fixed;
+}
+
+/* Dark: graphite with depth */
+html.dark {
+  background:
+    radial-gradient(1200px 760px at 50% -300px, #20242b 0%, #0f1115 52%, #090a0d 100%),
+    radial-gradient(980px 560px at 12% 22%, rgba(255, 255, 255, 0.075) 0%, transparent 62%),
+    radial-gradient(980px 560px at 88% 30%, rgba(255, 255, 255, 0.06) 0%, transparent 62%),
+    linear-gradient(180deg, #161a20 0%, #0f1115 58%, #08090c 100%);
+  background-attachment: fixed;
+}
+
+body {
+  min-height: 100%;
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: transparent;
+}
+
+main,
+section {
+  background: transparent !important;
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+}
+html.dark ::selection {
+  background: rgba(255, 255, 255, 0.92);
+  color: #000;
+}
+
+/* Mobile tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scroll snap for sliders */
+.snap-x { scroll-snap-type: x mandatory; }
+.snap-start { scroll-snap-align: start; }
+
+/* ---------- Premium utilities ---------- */
+
+/* Film grain */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.085;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Grid pattern */
+.grid-bg {
+  background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.08) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+html.dark .grid-bg {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.14) 1px, transparent 0);
+}
+
+/* Vignette */
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 25%, rgba(0, 0, 0, 0.88) 90%);
+}
+
+/* Ambient light */
+.ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  background:
+    radial-gradient(700px 420px at 18% 24%, rgba(255,255,255,0.10), transparent 58%),
+    radial-gradient(760px 460px at 82% 30%, rgba(255,255,255,0.08), transparent 60%);
+}
+html:not(.dark) .ambient {
+  opacity: 0.35;
+  background:
+    radial-gradient(720px 460px at 18% 24%, rgba(0,0,0,0.06), transparent 62%),
+    radial-gradient(760px 480px at 82% 30%, rgba(0,0,0,0.05), transparent 64%);
+}
+
+/* Editorial ghost text */
+.ghost-text {
+  position: absolute;
+  font-size: clamp(120px, 22vw, 280px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  opacity: 0.04;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* Divider line */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent);
+}
+html.dark .section-divider {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);
+}
+
+/* Scrollbar hide utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* --- Mobile stability / responsiveness --- */
+html, body {
+  overflow-x: hidden;
+  /* Prevent text from overflowing on narrow screens */
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Better anchor scroll offset with fixed header */
+:target {
+  scroll-margin-top: 110px;
+}
+@media (max-width: 640px) {
+  :target { scroll-margin-top: 92px; }
+}
+
+/* Horizontal scroll container for mobile carousels */
+.scroll-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+}
+.scroll-row > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+.scroll-row::-webkit-scrollbar { display: none; }
+.scroll-row { -ms-overflow-style: none; scrollbar-width: none; }
